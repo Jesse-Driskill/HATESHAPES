@@ -24,6 +24,9 @@ Wireframes:
   * About:
     https://wireframe.cc/h3cpvu (I will come up with the text here when I finish making the rest of the game)
     
+  * Gameplay:
+    https://wireframe.cc/e3V8E4
+    
     
     
 Technologies and APIs:
