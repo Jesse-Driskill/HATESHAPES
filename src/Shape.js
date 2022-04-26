@@ -1,4 +1,4 @@
-export default class Shape {
+export class Shape {
     constructor(pos) {
         
     }
