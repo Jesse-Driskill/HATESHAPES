@@ -11,14 +11,30 @@ Window.Bullet = Bullet;
 document.addEventListener("DOMContentLoaded", () => {
     
     
+    document.getElementById("whoosh").style.display = 'none';
+    document.getElementById("hitmarker").style.display = 'none';
     
     let canvas = document.getElementById("canvas");
     let ctx = canvas.getContext('2d');
     let game = new Game(ctx);
+    let score = document.getElementById("score");
+    
     game.animate();
+    
     document.addEventListener( "click", (e) => {
         let pos = [e.pageX, e.pageY];
+        let bullet = new Bullet(pos, ctx, 'white', { r: 10 }, [0, 0]);
         
+
+        for (let i = 0; i < game.objects.length; i++) {
+            if (bullet.collided(game.objects[i])) {
+                game.deleteObject(game.objects[i]);
+                game.score += 1;
+                score.innerHTML = `Score: ${game.score}`;
+            }
+        }
+
+        document.getElementById("hitmarker").play()
     });
     // game.deleteObjects();
 

@@ -27,6 +27,7 @@ export class Shape {
         this.x += v[0];
         this.y += v[1];
         this.pos = [this.x, this.y];
+        this.draw();
         // console.log(this.pos)
     }
 
@@ -67,13 +68,13 @@ export class Triangle extends Shape {
         let Y = this.y;
         
         let height = this.h * (Math.sqrt(3)/2);
-        this.ctx.fillstyle = this.color;
         this.ctx.beginPath();
         this.ctx.moveTo(X, Y);
         this.ctx.lineTo(X+height, Y+height + height/2); 
         this.ctx.lineTo(X-height, Y+height + height/2);
         this.ctx.lineTo(X, Y);
-        // this.// ctx.closePath();
+        
+        this.ctx.fillstyle = this.color;
         this.ctx.fill();
         
     }
@@ -82,12 +83,17 @@ export class Triangle extends Shape {
 
 export class Bullet extends Shape {
 
+    constructor(pos, ctx, color, dimensions, velocity) {
+        super(pos, ctx, color, dimensions, velocity);
+        console.log("bullet made!")
+    }
+
     draw() {
 
     }
 
     collided(object) {
-        if (UTIL.dist(this.pos, object.pos) < object.r) {
+        if (UTIL.dist(this.pos, object.pos) < object.r * 3.5) {
             return true;
         }
         else {

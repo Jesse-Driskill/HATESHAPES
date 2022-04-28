@@ -9,13 +9,15 @@ export class Game {
         this.ctx = ctx;
         this.spawnObjects();
         this.bullets = [];
-        
+        this.missed = 0;
+        this.score = 0;
     }
 
-    spawnObjects() {
+    spawnObjects(max = 3) {
         let ctx = this.ctx;
-        for (let i = 0; i < 3; i++) {
-            this.objects.push(this.pickShape())
+        for (let i = 0; i < max; i++) {
+            this.objects.push(this.pickShape());
+            // document.getElementById("whoosh").play();
         }
         // let a = UTIL.genRandVec;
         //sampleshapes
@@ -28,6 +30,9 @@ export class Game {
         // this.objects.push(new Triangle(UTIL.genRandPos(), this.ctx, 'black', { "h": 50}, a(800)));
         // this.objects.push(new Rectangle(UTIL.genRandPos(), this.ctx, "green", { "h": 20, "w": 20}, a(420)));
         // this.objects.push(new Circle(UTIL.genRandPos(), this.ctx, "red", { "r": 40 }, a(420)));
+        // setTimeout( () => {
+        //     document.getElementById("whoosh").play();
+        // }, 500)
     }
 
     pickShape() {
@@ -63,7 +68,7 @@ export class Game {
             this.ctx.clearRect(0, 0, 1700, 860);
             for (let i = 0; i < this.objects.length; i++) {
                 this.objects[i].move();
-                this.objects[i].draw();
+                // this.objects[i].draw();
                 this.objects[i].changeVelocity(UTIL.GRAVITY);
                 
             }
@@ -75,6 +80,10 @@ export class Game {
                     }
                 }
             }
+
+            this.checkShapePositions();
+            console.log(this.objects);
+
         }, 25)
     }
 
@@ -94,9 +103,40 @@ export class Game {
         }
 
         this.objects = arr;
+
+        if (this.checkLevelCompletion()) {
+            let that = this;
+            setTimeout( this.newLevel.bind(that), 1500 )
+        }
     }
 
-    
+    checkLevelCompletion() {
+        if (this.objects.length === 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    newLevel() {
+        this.level += 1;
+        this.spawnObjects(this.level + 3);
+        let lev = document.getElementById("level");
+        lev.innerHTML = `Level: ${this.level}`;
+    }
+
+    checkShapePositions() {
+        for (let i = 0; i < this.objects.length; i++) {
+            let shape = this.objects[i];
+            if (shape.y > 1000) {
+                this.missed += 1;
+                this.deleteObject(this.objects[i]);
+                let missed = document.getElementById("missed");
+                missed.innerHTML = `Missed: ${this.missed}`;
+            }
+        }
+    }
 
 
 

@@ -4,11 +4,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./styling.css">
     <script type="text/javascript" src="dist/main.js" charset="utf-8" defer></script>
     <title>Document</title>
 </head>
 <body>
     <h1 id="sup2">HATESHAPES</h1>
+    <h1 id="score">Score: 0</h1>
+    <h1 id="missed">Missed: 0</h1>
+    <h1 id="level">Level: 0</h1>
+
     <canvas id="canvas" width="1700" height="860"></canvas>
+
+    <audio controls id="hitmarker" >
+        <source src="./assets/HITMARKER.ogg">
+    </audio>
+
+    <audio controls id="whoosh" >
+        <source src="./assets/Woosh - Sound Effect.ogg">
+    </audio>
 </body>
 </html>
